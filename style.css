@@ -17,3 +17,18 @@ body {
   font-weight: 400;
   margin: 0px;
 }
+
+.grid, .row {
+  display: flex;
+}
+
+.grid {
+  flex-direction: column;
+}
+
+.grid-box {
+  height: 30px;
+  width: 30px;
+  border: 3px solid black;
+  flex: 0 0 auto;
+}
