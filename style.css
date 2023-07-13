@@ -1,0 +1,19 @@
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.heading {
+  padding: 30px;
+}
+
+.heading-title {
+  font-weight: 700;
+  font-size: 64px;
+  margin: 0px;
+}
+
+.heading-caption {
+  font-size: 36px;
+  font-weight: 400;
+  margin: 0px;
+}
