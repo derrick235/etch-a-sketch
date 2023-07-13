@@ -1,19 +1,23 @@
 body {
   font-family: "IBM Plex Sans", sans-serif;
+  margin: 15px;
 }
 
 .heading {
   padding: 30px;
+  border-radius: 10px;
+  background-color: #d7efff;
+  text-align: center;
 }
 
 .heading-title {
   font-weight: 700;
-  font-size: 64px;
+  font-size: 48px;
   margin: 0px;
 }
 
 .heading-caption {
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 400;
   margin: 0px;
 }
@@ -24,6 +28,8 @@ body {
 
 .grid {
   flex-direction: column;
+  margin-top: 15px;
+  align-items: center;
 }
 
 .grid-box {
