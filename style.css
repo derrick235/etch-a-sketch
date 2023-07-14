@@ -3,11 +3,10 @@ body {
   margin: 15px;
 }
 
-.heading {
+.heading, .tools {
   padding: 30px;
   border-radius: 10px;
   background-color: #d7efff;
-  text-align: center;
 }
 
 .heading-title {
@@ -22,6 +21,20 @@ body {
   margin: 0px;
 }
 
+.divider {
+  height: 2px;
+  background-color: black;
+  border-radius: 10px;
+  padding: 0px 10px;
+}
+
+.caption {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0px;
+  opacity: 50%;
+}
+
 .grid, .row {
   display: flex;
 }
@@ -29,12 +42,25 @@ body {
 .grid {
   flex-direction: column;
   margin-top: 15px;
-  align-items: center;
+  height: 480px;
+  width: 480px;
+}
+
+.row {
+  flex: 1 1 auto;
 }
 
 .grid-box {
-  height: 30px;
-  width: 30px;
-  border: 3px solid black;
-  flex: 0 0 auto;
+  border: 1px solid black;
+  flex: 1 1 auto;
+}
+
+.size {
+  margin-top: 10px;
+  border-radius: 10px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 24px;
+  padding: 5px 25px;
+  border: none;
+  background-color: #ffffffdd;
 }
