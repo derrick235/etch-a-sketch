@@ -48,5 +48,15 @@ function changeSize(e) {
 
 }
 
+function addButtonAnimation() {
+  this.classList.add("size-hover");
+}
+
+function removeButtonAnimation() {
+  this.classList.remove("size-hover");
+}
+
 let button = document.querySelector("button");
 button.addEventListener("click", changeSize);
+button.addEventListener("mouseover", addButtonAnimation);
+button.addEventListener("mouseout", removeButtonAnimation);

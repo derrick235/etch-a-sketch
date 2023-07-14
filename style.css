@@ -63,4 +63,12 @@ body {
   padding: 5px 25px;
   border: none;
   background-color: #ffffffdd;
+  transition: .1s;
+}
+
+.size-hover {
+  transform: scale(1.2);
+  background-color: #003cff;
+  color: white;
+  transition: .1s;
 }
