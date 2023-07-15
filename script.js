@@ -1,4 +1,6 @@
 const grid = document.querySelector(".grid");
+const resizePrompt = document.querySelector(".resize-prompt");
+const resizeCaption = document.querySelector(".resize-caption");
 
 // function to add background color
 function changeBackgroundColor(e) {
@@ -20,10 +22,14 @@ for (let i = 0; i < 16; i++) {
 
 // add button functionality
 
-function changeSize(e) {
-  let newSize = prompt("Enter a new size:");
+function openResize() {
+  resizePrompt.style.display = "block";
+}
+
+function changeSizeOK(e) {
+  let newSize = document.getElementById("size-input").value;
   if (newSize > 100) {
-    alert("Only values 100 and less are accepted.");
+    resizeCaption.style.color = "red";
     return;
   }
 
@@ -45,18 +51,41 @@ function changeSize(e) {
       row.appendChild(gridBox);
     }
   }
-
+  resizeCaption.style.color = "black";
+  resizePrompt.style.display = "none";
+  
 }
 
-function addButtonAnimation() {
+function addButtonAnimationResize() {
   this.classList.add("size-hover");
 }
 
-function removeButtonAnimation() {
+function removeButtonAnimationResize() {
   this.classList.remove("size-hover");
 }
 
+function addButtonAnimation() {
+  this.classList.add("button-hover");
+}
+
+function removeButtonAnimation() {
+  this.classList.remove("button-hover");
+}
+
+function cancel() {
+  resizePrompt.style.display = "none";
+}
+
 let button = document.querySelector("button");
-button.addEventListener("click", changeSize);
-button.addEventListener("mouseover", addButtonAnimation);
-button.addEventListener("mouseout", removeButtonAnimation);
+let okButton = document.querySelector(".done");
+let cancelButton = document.querySelector(".cancel");
+button.addEventListener("click", openResize);
+button.addEventListener("mouseover", addButtonAnimationResize);
+button.addEventListener("mouseout", removeButtonAnimationResize);
+
+okButton.addEventListener("mouseover", addButtonAnimation);
+okButton.addEventListener("mouseout", removeButtonAnimation);
+okButton.addEventListener("click", changeSizeOK);
+cancelButton.addEventListener("mouseover", addButtonAnimation);
+cancelButton.addEventListener("mouseout", removeButtonAnimation);
+cancelButton.addEventListener("click", cancel);
