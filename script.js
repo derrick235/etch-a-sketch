@@ -1,10 +1,34 @@
+// get all HTML elements
 const grid = document.querySelector(".grid");
 const resizePrompt = document.querySelector(".resize-prompt");
 const resizeCaption = document.querySelector(".resize-caption");
+const solid = document.querySelector("#solid");
+const rainbow = document.querySelector("#rainbow");
+const resize = document.querySelector("#resize");
+const tools = document.querySelectorAll(".button-tool");
+const eraser = document.querySelector("#eraser");
+const clear = document.querySelector("#clear");
+
+// booleans
+let isRainbow = false;
+let isEraser = false;
 
 // function to add background color
 function changeBackgroundColor(e) {
-  e.target.style.backgroundColor = "black";
+  if (isEraser) {
+    e.target.style.backgroundColor = "white";
+  }
+  else if (isRainbow) {
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      let randomColor = Math.floor(Math.random() * 17);
+      color += randomColor.toString(16);
+    }
+    e.target.style.backgroundColor = color;
+  }
+  else {
+    e.target.style.backgroundColor = "black";
+  }
 }
 
 // add grid of 16x16 square divs
@@ -22,8 +46,57 @@ for (let i = 0; i < 16; i++) {
 
 // add button functionality
 
+// open resize prompt
 function openResize() {
   resizePrompt.style.display = "block";
+}
+
+// change color from rainbow to solid and vice versa
+function changeColorOptions() {
+  if (this.getAttribute("id") === "rainbow") {
+    isRainbow = true;
+  }
+  else {
+    isRainbow = false;
+  }
+  isEraser = false;
+  eraser.classList.remove("select");
+  if (isRainbow) {
+    rainbow.classList.add("select");
+    solid.classList.remove("select");
+  }
+  else {
+    rainbow.classList.remove("select");
+    solid.classList.add("select");
+  }
+}
+
+function erase() {
+  isEraser = !(isEraser);
+  if (isEraser) {
+    eraser.classList.add("select");
+    rainbow.classList.remove("select");
+    solid.classList.remove("select");    
+  }
+  else {
+    if (isRainbow) {
+      eraser.classList.remove("select");
+      rainbow.classList.add("select");
+      solid.classList.remove("select");       
+    }
+    else {
+      eraser.classList.remove("select");
+      rainbow.classList.remove("select");
+      solid.classList.add("select");       
+    }
+  }
+}
+
+function clearAll() {
+  let allBoxes = document.querySelectorAll(".grid-box");
+  allBoxes.forEach((box) => {
+    box.style.backgroundColor = "white";
+  });
 }
 
 function changeSizeOK(e) {
@@ -56,12 +129,12 @@ function changeSizeOK(e) {
   
 }
 
-function addButtonAnimationResize() {
-  this.classList.add("size-hover");
+function addButtonAnimationTools() {
+  this.classList.add("tools-hover");
 }
 
-function removeButtonAnimationResize() {
-  this.classList.remove("size-hover");
+function removeButtonAnimationTools() {
+  this.classList.remove("tools-hover");
 }
 
 function addButtonAnimation() {
@@ -76,12 +149,18 @@ function cancel() {
   resizePrompt.style.display = "none";
 }
 
-let button = document.querySelector("button");
 let okButton = document.querySelector(".done");
 let cancelButton = document.querySelector(".cancel");
-button.addEventListener("click", openResize);
-button.addEventListener("mouseover", addButtonAnimationResize);
-button.addEventListener("mouseout", removeButtonAnimationResize);
+resize.addEventListener("click", openResize);
+rainbow.addEventListener("click", changeColorOptions);
+solid.addEventListener("click", changeColorOptions);
+eraser.addEventListener("click", erase);
+clear.addEventListener("click", clearAll);
+
+tools.forEach((tool) => {
+  tool.addEventListener("mouseover", addButtonAnimationTools);
+  tool.addEventListener("mouseout", removeButtonAnimationTools);
+})
 
 okButton.addEventListener("mouseover", addButtonAnimation);
 okButton.addEventListener("mouseout", removeButtonAnimation);

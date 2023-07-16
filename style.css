@@ -3,7 +3,7 @@ body {
   margin: 15px;
 }
 
-.heading, .tools {
+.heading {
   padding: 30px;
   border-radius: 10px;
   background-color: #d7efff;
@@ -47,11 +47,11 @@ body {
   opacity: 50%;
 }
 
-.grid, .row, .prompt-actions {
+.grid, .row, .prompt-actions, .tools {
   display: flex;
 }
 
-.prompt-actions{
+.prompt-actions, .tools {
   gap: 15px;
 }
 
@@ -71,15 +71,26 @@ body {
   flex: 1 1 auto;
 }
 
-.size {
-  margin-top: 10px;
+.button-tool {
   border-radius: 10px;
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 24px;
-  padding: 5px 25px;
+  padding: 10px 25px;
   border: none;
   background-color: #ffffffdd;
-  transition: .1s;
+  transition: .2s;
+}
+
+.tools {
+  margin-top: 10px;
+  align-items: center;
+}
+
+.color-kind {
+  border-radius: 10px;
+  background-color: #dedede;
+  padding: 5px;
+  align-items: center;
 }
 
 .done, .cancel {
@@ -88,8 +99,6 @@ body {
 
 .done {
   flex: 1;
-  background-color: #003cff;
-  color: white;
 }
 
 .cancel {
@@ -97,10 +106,13 @@ body {
   background-color: #dedede;
 }
 
-.size-hover {
-  transform: scale(1.2);
+.tools-hover, .select, .done {
   background-color: #003cff;
   color: white;
+}
+
+.tools-hover {
+  transform: scale(1.1);
 }
 
 .button-hover {
