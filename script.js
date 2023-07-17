@@ -158,12 +158,17 @@ function removeButtonAnimation() {
   this.classList.remove("button-hover");
 }
 
-function cancelResize() {
-  resizePrompt.style.display = "none";
+function cancelPrompt() {
+  let typePrompt = this.getAttribute("id");
+  if (typePrompt === 'resize') {
+    resizePrompt.style.display = "none";
+  }
+  else if (typePrompt === 'rename') {
+    renamePrompt.style.display = "none";
+  }
 }
 
 let resizeOkButton = document.querySelector(".doneResize");
-let cancelButton = document.querySelector(".cancel");
 resize.addEventListener("click", openResize);
 
 rename.addEventListener("click", openRename);
@@ -178,8 +183,13 @@ tools.forEach((tool) => {
 })
 
 resizeOkButton.addEventListener("click", changeSizeOK);
-cancelButton.addEventListener("click", cancelResize);
 
 let renameOkButton = document.querySelector(".doneRename");
 
 renameOkButton.addEventListener("click", renameTitle);
+
+let cancelButtons = document.querySelectorAll(".cancel");
+
+cancelButtons.forEach((cancel) => {
+  cancel.addEventListener("click", cancelPrompt);
+});
