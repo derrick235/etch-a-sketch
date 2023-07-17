@@ -25,6 +25,7 @@
           <button class="button-tool" id="eraser">Eraser</button>
         </div>
         <button class="button-tool" id="clear">Clear All</button>
+        <button class="button-tool" id="rename">Rename</button>
       </div>
     </div>
     <div class="grid">
@@ -33,15 +34,30 @@
 
     <div class="resize-prompt">
       <div class="resize-content">
-        <h2 class="resize-heading">Enter a new size</h2>
-        <p class="resize-caption">Only grids of size 100 and less are supported.</p>
+        <h2 class="prompt-heading">Enter a new size</h2>
+        <p class="prompt-caption">Only grids of size 100 and less are supported.</p>
         <form>
           <label class="caption" for="size-input">NEW SIZE</label><br>
           <input type="text" id="size-input">
         </form>
         <div class="prompt-actions">
           <button class="button-tool cancel">Cancel</button>
-          <button class="button-tool done">OK</button>
+          <button class="button-tool doneResize">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rename-prompt">
+      <div class="rename-content">
+        <h2 class="prompt-heading">Rename your Etch-a-Sketch</h2>
+        <p class="prompt-caption">The name will be displayed at the top of the screen.</p>
+        <form>
+          <label class="caption" for="rename-input">NAME</label><br>
+          <input type="text" id="rename-input">
+        </form>
+        <div class="prompt-actions">
+          <button class="button-tool cancel">Cancel</button>
+          <button class="button-tool doneRename done">OK</button>
         </div>
       </div>
     </div>

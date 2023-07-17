@@ -1,13 +1,17 @@
 // get all HTML elements
 const grid = document.querySelector(".grid");
 const resizePrompt = document.querySelector(".resize-prompt");
-const resizeCaption = document.querySelector(".resize-caption");
+const resizeCaption = document.querySelector(".prompt-caption");
+const renamePrompt = document.querySelector(".rename-prompt");
 const solid = document.querySelector("#solid");
 const rainbow = document.querySelector("#rainbow");
 const resize = document.querySelector("#resize");
 const tools = document.querySelectorAll(".button-tool");
+const doneButtons = document.querySelectorAll(".done");
 const eraser = document.querySelector("#eraser");
 const clear = document.querySelector("#clear");
+const rename = document.querySelector("#rename");
+const headingTitle = document.querySelector(".heading-title");
 
 // booleans
 let isRainbow = false;
@@ -49,6 +53,10 @@ for (let i = 0; i < 16; i++) {
 // open resize prompt
 function openResize() {
   resizePrompt.style.display = "block";
+}
+
+function openRename() {
+  renamePrompt.style.display = "block";
 }
 
 // change color from rainbow to solid and vice versa
@@ -129,6 +137,11 @@ function changeSizeOK(e) {
   
 }
 
+function renameTitle() {
+  headingTitle.textContent = document.getElementById("rename-input").value + ".etchasketch";
+  renamePrompt.style.display = "none";
+}
+
 function addButtonAnimationTools() {
   this.classList.add("tools-hover");
 }
@@ -145,13 +158,15 @@ function removeButtonAnimation() {
   this.classList.remove("button-hover");
 }
 
-function cancel() {
+function cancelResize() {
   resizePrompt.style.display = "none";
 }
 
-let okButton = document.querySelector(".done");
+let resizeOkButton = document.querySelector(".doneResize");
 let cancelButton = document.querySelector(".cancel");
 resize.addEventListener("click", openResize);
+
+rename.addEventListener("click", openRename);
 rainbow.addEventListener("click", changeColorOptions);
 solid.addEventListener("click", changeColorOptions);
 eraser.addEventListener("click", erase);
@@ -162,9 +177,9 @@ tools.forEach((tool) => {
   tool.addEventListener("mouseout", removeButtonAnimationTools);
 })
 
-okButton.addEventListener("mouseover", addButtonAnimation);
-okButton.addEventListener("mouseout", removeButtonAnimation);
-okButton.addEventListener("click", changeSizeOK);
-cancelButton.addEventListener("mouseover", addButtonAnimation);
-cancelButton.addEventListener("mouseout", removeButtonAnimation);
-cancelButton.addEventListener("click", cancel);
+resizeOkButton.addEventListener("click", changeSizeOK);
+cancelButton.addEventListener("click", cancelResize);
+
+let renameOkButton = document.querySelector(".doneRename");
+
+renameOkButton.addEventListener("click", renameTitle);
