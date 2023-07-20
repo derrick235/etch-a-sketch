@@ -45,14 +45,20 @@ body {
   font-weight: 700;
   margin: 0px;
   opacity: 50%;
+  margin: 10px 0px;
 }
 
-.grid, .row, .prompt-actions, .tools {
+.grid, .row, .prompt-actions, .tools, .color-kind, .opacity-kind, .draw-kind {
   display: flex;
 }
 
 .prompt-actions, .tools {
   gap: 15px;
+}
+
+.color-kind, .opacity-kind, .draw-kind, .color-select {
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .grid {
@@ -86,39 +92,34 @@ body {
   align-items: center;
 }
 
-.color-kind {
+.pen-kind, .color-kind, .opacity-kind, .draw-kind {
   border-radius: 10px;
   background-color: #dedede;
   padding: 5px;
 }
 
-.doneResize, .doneRename, .cancel {
+.doneResize, .doneRename, .cancel, .doneColor {
   padding: 10px;
 }
 
-.doneResize, .doneRename {
+.doneResize, .doneRename, .doneColor, #solid, #rainbow, #full, #shading, #click-draw, #hover-draw, .cancel {
   flex: 1;
 }
 
 .cancel {
-  flex: 1;
   background-color: #dedede;
 }
 
-.tools-hover, .select, .doneResize, .doneRename {
+.tools-hover, .select, .doneResize, .doneRename, .doneColor {
   background-color: #003cff;
   color: white;
 }
 
-.tools-hover {
-  transform: scale(1.1);
-}
-
-.button-hover {
+.tools-hover, .button-hover {
   transform: scale(1.05);
 }
 
-.resize-prompt, .rename-prompt {
+.resize-prompt, .rename-prompt, .color-prompt {
   position: fixed;
   left: 0;
   top: 0; /* place left and top 0 as resize prompt is initially on bottom of grid */
@@ -135,12 +136,23 @@ body {
   display: none;
 }
 
-.resize-content, .rename-content {
+.color-prompt {
+  display: block;
+}
+
+.resize-content, .rename-content, .color-content {
   width: 500px;
   background-color: white;
   border-radius: 10px;
   padding: 40px;
   margin: 100px auto; /* center horizontally */
+}
+
+.color-select {
+  border: none;
+  background-color: #777777;
+  height: 40px;
+  width: 100px;
 }
 
 #size-input, #rename-input {

@@ -18,13 +18,13 @@
       <p class="divider"></p>
       <h2 class="caption">TOOLS</h2>
       <div class="tools">
-        <button class="button-tool" id="resize">Resize</button>
-        <div class="color-kind">
-          <button class="button-tool select" id="solid">Solid</button>
-          <button class="button-tool" id="rainbow">Rainbow</button>
+        <div class="pen-kind">
+          <button class="button-tool select" id="pen">Pen</button>
           <button class="button-tool" id="eraser">Eraser</button>
         </div>
+        <button class="button-tool" id="color-tools">Color Tools</button>
         <button class="button-tool" id="clear">Clear All</button>
+        <button class="button-tool" id="resize">Resize Grid</button>
         <button class="button-tool" id="rename">Rename</button>
       </div>
     </div>
@@ -58,6 +58,39 @@
         <div class="prompt-actions">
           <button class="button-tool cancel" id="rename">Cancel</button>
           <button class="button-tool doneRename done">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="color-prompt">
+      <div class="color-content">
+        <h2 class="prompt-heading">Color Tools</h2>
+        <p class="prompt-caption">Adjust pen type, color, and opacity here.</p>
+
+        <p class="caption">PEN TYPE</p>
+        <div class="color-kind">
+          <button class="button-tool select" id="solid">Solid</button>
+          <button class="button-tool" id="rainbow">Rainbow</button>
+        </div>
+
+        <p class="caption" id="color-caption">COLOR</p>
+        <input type="color" class="color-select">
+
+        <p class="caption">OPACITY</p>
+        <div class="opacity-kind">
+          <button class="button-tool select" id="full">Full</button>
+          <button class="button-tool" id="shading">Shading</button>
+        </div>
+
+        <p class="caption">DRAWING METHOD</p>
+        <div class="draw-kind">
+          <button class="button-tool select" id="hover-draw">Hover</button>
+          <button class="button-tool" id="click-draw">Click</button>
+        </div>
+
+        <div class="prompt-actions">
+          <button class="button-tool cancel" id="colorTools">Cancel</button>
+          <button class="button-tool doneColor done">Done</button>
         </div>
       </div>
     </div>
