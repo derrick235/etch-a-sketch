@@ -138,7 +138,11 @@ body {
 }
 
 .color-prompt {
-  display: block;
+  display: none;
+}
+
+#rainbow-disclaimer {
+  display: none;
 }
 
 .resize-content, .rename-content, .color-content {

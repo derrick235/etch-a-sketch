@@ -16,20 +16,37 @@ const rename = document.querySelector("#rename");
 const headingTitle = document.querySelector(".heading-title");
 const colorSelect = document.querySelector(".color-select");
 const colorCaption = document.querySelector("#color-caption")
+const opacitySelect = document.querySelector(".opacity-kind");
+const opacityCaption = document.querySelector("#opacity-caption");
 const full = document.querySelector("#full");
 const shading = document.querySelector("#shading")
 const hoverDraw = document.querySelector("#hover-draw");
 const clickDraw = document.querySelector("#click-draw");
 const pen = document.querySelector("#pen");
+const rainbowDisclaimer = document.querySelector("#rainbow-disclaimer")
 
 // booleans
 let isRainbow = false;
 let isEraser = false;
 let shadingOn = false;
 let mouseDownDraw = false;
+let clickMethod = false;
 
 // initial values
 let penColor = "#000000";
+
+// add grid of 16x16 square divs
+for (let i = 0; i < 16; i++) {
+  let row = document.createElement("div");
+  row.classList.add("row");
+  grid.appendChild(row);
+  for (let j = 0; j < 16; j++) {
+    let gridBox = document.createElement("div");
+    gridBox.classList.add("grid-box");
+    gridBox.addEventListener("mouseover", changeBackgroundColor);
+    row.appendChild(gridBox);
+  }
+}
 
 // function to add background color
 function changeBackgroundColor(e) {
@@ -61,9 +78,12 @@ function changeBackgroundColor(e) {
       else {
         origLast = origColor.lastIndexOf(","); // get last comma which is to the right of the B value and left of the A value
       }
+
+      // check if the grid box color and pen color are the same
       if ((rValue + ", " + gValue + ", " + bValue) != origColor.substring(origBeginning, origLast)) { 
         e.target.style.backgroundColor = "rgba(" + rValue + ", " + gValue + ", " + bValue + ", 0.2)";
       }
+
       else {
         if (origColor.substring(0,4) === "rgb(") { // if it is already opacity = 1 (which it then becomes RGB)
           return;
@@ -79,6 +99,8 @@ function changeBackgroundColor(e) {
         e.target.style.backgroundColor = origColor.substring(0, origLast) + ", " + newOpacity + ")";
       }
     }
+
+    // if shading is off
     else {
       e.target.style.backgroundColor = penColor;
     }
@@ -87,32 +109,22 @@ function changeBackgroundColor(e) {
 
 function startChangeColorClick(e) {
   let allGrids = document.querySelectorAll(".grid-box");
+  document.addEventListener("mouseup", endChangeColorClick); // if mouse is released anywhere, stop coloring
+
+  // upon 1st click, on any encounter with a grid box while hover + click, color it in
   allGrids.forEach((singleGrid) => {
     singleGrid.addEventListener("mouseover", changeBackgroundColor);
-    singleGrid.addEventListener("mouseup", endChangeColorClick);
   })
   changeBackgroundColor(e);
 }
 
 function endChangeColorClick(e) {
   let allGrids = document.querySelectorAll(".grid-box");
+
+  document.removeEventListener("mouseup", endChangeColorClick);
   allGrids.forEach((singleGrid) => {
     singleGrid.removeEventListener("mouseover", changeBackgroundColor);
-    singleGrid.removeEventListener("mouseup", endChangeColorClick);
   })
-}
-
-// add grid of 16x16 square divs
-for (let i = 0; i < 16; i++) {
-  let row = document.createElement("div");
-  row.classList.add("row");
-  grid.appendChild(row);
-  for (let j = 0; j < 16; j++) {
-    let gridBox = document.createElement("div");
-    gridBox.classList.add("grid-box");
-    gridBox.addEventListener("mouseover", changeBackgroundColor);
-    row.appendChild(gridBox);
-  }
 }
 
 // BUTTON FUNCTIONALITY METHODS ***********************************
@@ -145,12 +157,18 @@ function changeColorOptions() {
     solid.classList.remove("select");
     colorSelect.style.display = "none";
     colorCaption.style.display = "none";
+    opacitySelect.style.display = "none";
+    opacityCaption.style.display = "none";
+    rainbowDisclaimer.style.display = "block";
   }
   else {
     rainbow.classList.remove("select");
     solid.classList.add("select");
     colorSelect.style.display = "block";
     colorCaption.style.display = "block";
+    opacitySelect.style.display = "flex";
+    opacityCaption.style.display = "block";
+    rainbowDisclaimer.style.display = "none";
   }
 }
 
@@ -170,6 +188,8 @@ function turnOffOpacity() {
 // switch to eraser or turn off
 function erase() {
   isEraser = !(isEraser);
+
+  // add/remove select class from button
   if (isEraser) {
     eraser.classList.add("select");
     pen.classList.remove("select");  
@@ -212,7 +232,13 @@ function changeSizeOK(e) {
     for (let j = 0; j < newSize; j++) {
       let gridBox = document.createElement("div");
       gridBox.classList.add("grid-box");
-      gridBox.addEventListener("mouseover", changeBackgroundColor);
+
+      if (clickMethod) {
+        gridBox.addEventListener("mousedown", startChangeColorClick);
+      }
+      else {
+        gridBox.addEventListener("mouseover", changeBackgroundColor);
+      }
       row.appendChild(gridBox);
     }
   }
@@ -226,6 +252,8 @@ function changeSizeOK(e) {
 function changeClick() {
   clickDraw.classList.add("select");
   hoverDraw.classList.remove("select");
+  clickMethod = true;
+
   let allGrids = document.querySelectorAll(".grid-box");
   allGrids.forEach((singleGrid) => {
     singleGrid.removeEventListener("mouseover", changeBackgroundColor);
@@ -237,6 +265,8 @@ function changeClick() {
 function changeHover() {
   clickDraw.classList.remove("select");
   hoverDraw.classList.add("select");
+  clickMethod = false;
+
   let allGrids = document.querySelectorAll(".grid-box");
   allGrids.forEach((singleGrid) => {
     singleGrid.removeEventListener("mousedown", startChangeColorClick);
