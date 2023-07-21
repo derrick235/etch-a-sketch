@@ -34,7 +34,7 @@ let penColor = "#000000";
 // function to add background color
 function changeBackgroundColor(e) {
   if (isEraser) {
-    e.target.style.backgroundColor = "white";
+    e.target.style.backgroundColor = "rgb(255, 255, 255)";
   }
   else if (isRainbow) {
     let color = "#";
@@ -45,7 +45,43 @@ function changeBackgroundColor(e) {
     e.target.style.backgroundColor = color;
   }
   else {
-    e.target.style.backgroundColor = penColor;
+    let origColor = e.target.style.backgroundColor;
+    if (shadingOn) {
+      // pen color is always originally in hex. Obtain separate r, g, and b values
+      let rValue = parseInt(penColor.substring(1,3), 16);
+      let gValue = parseInt(penColor.substring(3,5), 16);
+      let bValue = parseInt(penColor.substring(5,7), 16);
+
+      // orig color is either in rgb or rgba. check if it is rgb or rgba and then obtain the r, g, and b values
+      let origBeginning = origColor.indexOf("(") + 1; // beginning of first value (R value)
+      let origLast;
+      if (origColor.substring(0,4) === "rgb(") { // Once a color reaches an opacity of 1, Js converts it from RGBA to RGB
+        origLast = origColor.lastIndexOf(")");
+      }
+      else {
+        origLast = origColor.lastIndexOf(","); // get last comma which is to the right of the B value and left of the A value
+      }
+      if ((rValue + ", " + gValue + ", " + bValue) != origColor.substring(origBeginning, origLast)) { 
+        e.target.style.backgroundColor = "rgba(" + rValue + ", " + gValue + ", " + bValue + ", 0.2)";
+      }
+      else {
+        if (origColor.substring(0,4) === "rgb(") { // if it is already opacity = 1 (which it then becomes RGB)
+          return;
+        } 
+        let origEnd = origColor.indexOf(")");
+        let newOpacity = Number(origColor.substring(origLast + 1, origEnd));
+        if (newOpacity <= 0.8) {
+          newOpacity += 0.2;
+        }
+        else {
+          newOpacity = 1.0;
+        }
+        e.target.style.backgroundColor = origColor.substring(0, origLast) + ", " + newOpacity + ")";
+      }
+    }
+    else {
+      e.target.style.backgroundColor = penColor;
+    }
   }
 }
 
@@ -119,8 +155,16 @@ function changeColorOptions() {
 }
 
 // change opacity
-function enableOpacity() {
+function turnOnOpacity() {
   shadingOn = true;
+  full.classList.remove("select");
+  shading.classList.add("select");
+}
+
+function turnOffOpacity() {
+  shadingOn = false;
+  full.classList.add("select");
+  shading.classList.remove("select");
 }
 
 // switch to eraser or turn off
@@ -140,7 +184,7 @@ function erase() {
 function clearAll() {
   let allBoxes = document.querySelectorAll(".grid-box");
   allBoxes.forEach((box) => {
-    box.style.backgroundColor = "white";
+    box.style.backgroundColor = "rgb(255, 255, 255)";
   });
 }
 
@@ -250,6 +294,8 @@ eraser.addEventListener("click", erase);
 pen.addEventListener("click", erase);
 clear.addEventListener("click", clearAll);
 colorTools.addEventListener("click", openColorTools);
+full.addEventListener("click", turnOffOpacity);
+shading.addEventListener("click", turnOnOpacity);
 
 clickDraw.addEventListener("click", changeClick);
 hoverDraw.addEventListener("click", changeHover);
@@ -272,7 +318,3 @@ let cancelButtons = document.querySelectorAll(".cancel");
 cancelButtons.forEach((cancel) => {
   cancel.addEventListener("click", cancelPrompt);
 });
-
-document.addEventListener("mousedown", () => {
-  console.log("mousedown!");
-})

@@ -75,6 +75,7 @@ body {
 .grid-box {
   border: 1px solid black;
   flex: 1 1 auto;
+  background-color: rgb(255, 255, 255);
 }
 
 .button-tool {
