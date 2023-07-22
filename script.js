@@ -2,13 +2,15 @@
 const grid = document.querySelector(".grid");
 const resizePrompt = document.querySelector(".resize-prompt");
 const resizeCaption = document.querySelector(".prompt-caption");
-const renamePrompt = document.querySelector(".rename-prompt");
+const customizePrompt = document.querySelector(".customize-prompt");
 const colorToolsPrompt = document.querySelector(".color-prompt");
 const solid = document.querySelector("#solid");
 const rainbow = document.querySelector("#rainbow");
 const resize = document.querySelector("#resize");
 const colorTools = document.querySelector("#color-tools");
 const tools = document.querySelectorAll(".button-tool");
+const selectTools = document.querySelectorAll(".select-tool");
+
 const doneButtons = document.querySelectorAll(".done");
 const eraser = document.querySelector("#eraser");
 const clear = document.querySelector("#clear");
@@ -23,7 +25,14 @@ const shading = document.querySelector("#shading")
 const hoverDraw = document.querySelector("#hover-draw");
 const clickDraw = document.querySelector("#click-draw");
 const pen = document.querySelector("#pen");
-const rainbowDisclaimer = document.querySelector("#rainbow-disclaimer")
+const rainbowDisclaimer = document.querySelector("#rainbow-disclaimer");
+const deleteAll = document.querySelector("#delete-all");
+const clearCancel = document.querySelector("#clear-cancel");
+const clearPrompt = document.querySelector(".clear-prompt");
+
+const customizeTitle = document.querySelector("#customize-title");
+const customizeCaption = document.querySelector("#customize-caption");
+const bitCaption = document.querySelector("#bit");
 
 // booleans
 let isRainbow = false;
@@ -136,7 +145,7 @@ function openResize() {
 
 // open rename prompt
 function openRename() {
-  renamePrompt.style.display = "block";
+  customizePrompt.style.display = "block";
 }
 
 // open color tools prompt
@@ -201,11 +210,20 @@ function erase() {
 }
 
 // clear entire grid with white background
+function clearAllSure() {
+  clearPrompt.style.display = "block";
+}
+
+function clearAllCancel() {
+  clearPrompt.style.display = "none";
+}
+
 function clearAll() {
   let allBoxes = document.querySelectorAll(".grid-box");
   allBoxes.forEach((box) => {
     box.style.backgroundColor = "rgb(255, 255, 255)";
   });
+  clearPrompt.style.display = "none";
 }
 
 // change grid size once OK is selected
@@ -217,6 +235,8 @@ function changeSizeOK(e) {
     resizeCaption.style.color = "red";
     return;
   }
+
+  bitCaption.textContent = newSize + "-bit";
 
   // remove current grid
   let rows = document.querySelectorAll(".row");
@@ -275,9 +295,12 @@ function changeHover() {
   mouseDownDraw = false;
 }
 
-function renameTitle() {
+function customizeDone() {
   headingTitle.textContent = document.getElementById("rename-input").value + ".etchasketch";
-  renamePrompt.style.display = "none";
+  customizeTitle.textContent = document.getElementById("rename-input").value + ".etchasketch";
+  customizeCaption.textContent = document.getElementById("caption-input").value;
+
+  customizePrompt.style.display = "none";
 }
 
 function changeColorTools() {
@@ -301,13 +324,21 @@ function removeButtonAnimation() {
   this.classList.remove("button-hover");
 }
 
+function addDeleteAnimation() {
+  this.classList.add("delete-all");
+}
+
+function removeDeleteAnimation() {
+  this.classList.remove("delete-all");
+}
+
 function cancelPrompt() {
   let typePrompt = this.getAttribute("id");
   if (typePrompt === 'resize') {
     resizePrompt.style.display = "none";
   }
   else if (typePrompt === 'rename') {
-    renamePrompt.style.display = "none";
+    customizePrompt.style.display = "none";
   }
   else if (typePrompt === 'colorTools') {
     colorToolsPrompt.style.display = "none";
@@ -322,7 +353,7 @@ rainbow.addEventListener("click", changeColorOptions);
 solid.addEventListener("click", changeColorOptions);
 eraser.addEventListener("click", erase);
 pen.addEventListener("click", erase);
-clear.addEventListener("click", clearAll);
+clear.addEventListener("click", clearAllSure);
 colorTools.addEventListener("click", openColorTools);
 full.addEventListener("click", turnOffOpacity);
 shading.addEventListener("click", turnOnOpacity);
@@ -335,10 +366,15 @@ tools.forEach((tool) => {
   tool.addEventListener("mouseout", removeButtonAnimationTools);
 })
 
+selectTools.forEach((tool) => {
+  tool.addEventListener("mouseover", addButtonAnimation);
+  tool.addEventListener("mouseout", removeButtonAnimation);
+})
+
 resizeOkButton.addEventListener("click", changeSizeOK);
 
 let renameOkButton = document.querySelector(".doneRename");
-renameOkButton.addEventListener("click", renameTitle);
+renameOkButton.addEventListener("click", customizeDone);
 
 let colorOkButton = document.querySelector(".doneColor");
 colorOkButton.addEventListener("click", changeColorTools);
@@ -348,3 +384,8 @@ let cancelButtons = document.querySelectorAll(".cancel");
 cancelButtons.forEach((cancel) => {
   cancel.addEventListener("click", cancelPrompt);
 });
+
+deleteAll.addEventListener("mouseover", addDeleteAnimation);
+deleteAll.addEventListener("mouseout", removeDeleteAnimation);
+deleteAll.addEventListener("click", clearAll);
+clearCancel.addEventListener("click", clearAllCancel);

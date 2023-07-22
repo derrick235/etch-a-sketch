@@ -16,6 +16,7 @@ body {
 .heading-title {
   font-weight: 700;
   font-size: 48px;
+  text-align: center;
 }
 
 .heading-caption {
@@ -23,7 +24,7 @@ body {
   font-weight: 400;
 }
 
-.prompt-heading {
+.prompt-heading, .material-symbols-rounded {
   font-size: 36px;
   font-weight: 700;
 }
@@ -48,8 +49,25 @@ body {
   margin: 10px 0px;
 }
 
-.grid, .row, .prompt-actions, .tools, .color-kind, .opacity-kind, .draw-kind {
+.grid, .row, .prompt-actions, .tools, .color-kind, .opacity-kind, .draw-kind, .grid-shape {
   display: flex;
+}
+
+.grid-shape {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Press Start 2P", sans-serif;
+}
+
+.grid-heading {
+  font-size: 28px;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.grid-caption {
+  margin: 10px 0px;
 }
 
 .prompt-actions, .tools {
@@ -69,16 +87,16 @@ body {
 }
 
 .row {
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 }
 
 .grid-box {
   border: 1px solid black;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
   background-color: rgb(255, 255, 255);
 }
 
-.button-tool {
+.button-tool, .select-tool {
   border-radius: 10px;
   border: none;
   background-color: #ffffffdd;
@@ -91,6 +109,7 @@ body {
 .tools {
   margin-top: 10px;
   align-items: center;
+  justify-content: center;
 }
 
 .pen-kind, .color-kind, .opacity-kind, .draw-kind {
@@ -116,11 +135,20 @@ body {
   color: white;
 }
 
-.tools-hover, .button-hover {
-  transform: scale(1.05);
+.delete-all {
+  background-color: red;
+  color: white;
 }
 
-.resize-prompt, .rename-prompt, .color-prompt {
+.tools-hover {
+  transform: scale(1.1);
+}
+
+.button-hover {
+  transform: scale(1.2);
+}
+
+.customize-prompt, .resize-prompt, .color-prompt, .clear-prompt {
   position: fixed;
   left: 0;
   top: 0; /* place left and top 0 as resize prompt is initially on bottom of grid */
@@ -133,7 +161,7 @@ body {
   display: none;
 }
 
-.rename-prompt {
+.customize-prompt {
   display: none;
 }
 
@@ -141,11 +169,15 @@ body {
   display: none;
 }
 
+.clear-prompt {
+  display: none;
+}
+
 #rainbow-disclaimer {
   display: none;
 }
 
-.resize-content, .rename-content, .color-content {
+.resize-content, .customize-content, .color-content, .clear-content {
   width: 500px;
   background-color: white;
   border-radius: 10px;
@@ -160,11 +192,15 @@ body {
   width: 100px;
 }
 
-#size-input, #rename-input {
+#size-input, #rename-input, #caption-input {
   border-radius: 10px;
   border: 2px solid black;
   font-size: 24px;
   font-family: "IBM Plex Sans", sans-serif;
   margin-bottom: 20px;
   padding: 5px;
+}
+
+#customize-caption {
+  margin-bottom: 0px;
 }
