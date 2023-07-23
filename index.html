@@ -22,13 +22,13 @@
       <p class="divider"></p>
       <div class="tools">
         <div class="pen-kind">
-          <button class="select-tool select" id="pen">Pen</button>
+          <button class="select select-tool" id="pen">Pen</button>
           <button class="select-tool" id="eraser">Eraser</button>
         </div>
         <button class="button-tool" id="color-tools">Color Tools</button>
         <button class="button-tool" id="clear">Clear All</button>
         <button class="button-tool" id="resize">Resize Grid</button>
-        <button class="button-tool" id="rename">Customize</button>
+        <button class="button-tool" id="customize">Customize</button>
       </div>
     </div>
     <div class="grid-shape">
@@ -40,24 +40,24 @@
       <p class="grid-caption" id="bit">16-bit</p>
     </div>
 
-    <div class="resize-prompt">
-      <div class="resize-content">
+    <div class="prompt" id="resize-prompt">
+      <div class="prompt-content" id="resize-content">
         <h2 class="material-symbols-rounded prompt-heading" style="font-size: 48px">aspect_ratio</h2>
         <h2 class="prompt-heading">Enter a new size</h2>
         <p class="prompt-caption">Only grids of size 100 and less are supported.</p>
         <form>
           <label class="caption" for="size-input">NEW SIZE</label><br>
-          <input type="text" id="size-input">
+          <input type="text" class="input" id="size-input">
         </form>
         <div class="prompt-actions">
           <button class="button-tool cancel" id="resize">Cancel</button>
-          <button class="button-tool doneResize">OK</button>
+          <button class="button-tool done" id="done-resize">OK</button>
         </div>
       </div>
     </div>
 
-    <div class="clear-prompt">
-      <div class="clear-content">
+    <div class="prompt" id="clear-prompt">
+      <div class="prompt-content" id="clear-content">
         <h2 class="material-symbols-rounded prompt-heading" style="font-size: 48px;">delete</h2>
         <h2 class="prompt-heading">Are you sure you want to erase everything?</h2>
         <p class="prompt-caption">This cannot be undone.</p>
@@ -68,35 +68,35 @@
       </div>
     </div>
 
-    <div class="customize-prompt">
-      <div class="customize-content">
+    <div class="prompt" id="customize-prompt">
+      <div class="prompt-content" id="customize-content">
         <h2 class="material-symbols-rounded prompt-heading" style="font-size: 48px">ambient_screen</h2>
         <h2 class="prompt-heading">Customize</h2>
         <p class="prompt-caption">Change the name and add a caption.</p>
         <form>
           <label class="caption" for="rename-input">NAME</label><br>
-          <input type="text" id="rename-input">
+          <input type="text" class="input" id="rename-input">
         </form>
         <form>
           <label class="caption" for="rename-input">CAPTION</label><br>
-          <input type="text" id="caption-input">
+          <input type="text" class="input" id="caption-input">
         </form>
 
         <div class="prompt-actions">
           <button class="button-tool cancel" id="rename">Cancel</button>
-          <button class="button-tool doneRename done">Done</button>
+          <button class="button-tool done" id="done-customize">Done</button>
         </div>
       </div>
     </div>
 
-    <div class="color-prompt">
-      <div class="color-content">
+    <div class="prompt" id="color-prompt">
+      <div class="prompt-content" id="color-content">
         <h2 class="material-symbols-rounded prompt-heading" style="font-size: 48px">stylus_note</h2>
         <h2 class="prompt-heading">Color Tools</h2>
         <p class="prompt-caption">Adjust pen type, color, and opacity here.</p>
 
         <p class="caption">PEN TYPE</p>
-        <div class="color-kind">
+        <div class="select-kind color-kind">
           <button class="select-tool select" id="solid">Solid</button>
           <button class="select-tool" id="rainbow">Rainbow</button>
         </div>
@@ -106,20 +106,20 @@
         <input type="color" class="color-select">
 
         <p class="caption" id="opacity-caption">OPACITY</p>
-        <div class="opacity-kind">
+        <div class="select-kind opacity-kind">
           <button class="select-tool select" id="full">Full</button>
           <button class="select-tool" id="shading">Shading</button>
         </div>
 
         <p class="caption">DRAWING METHOD</p>
-        <div class="draw-kind">
+        <div class="select-kind draw-kind">
           <button class="select-tool select" id="hover-draw">Hover</button>
           <button class="select-tool" id="click-draw">Click</button>
         </div>
 
         <div class="prompt-actions">
           <button class="button-tool cancel" id="colorTools">Cancel</button>
-          <button class="button-tool doneColor done">Done</button>
+          <button class="button-tool done" id="done-color">Done</button>
         </div>
       </div>
     </div>

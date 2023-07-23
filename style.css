@@ -3,30 +3,38 @@ body {
   margin: 15px;
 }
 
+.input, button, body {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.grid-shape {
+  font-family: "Press Start 2P", sans-serif;
+}
+
+.heading-title, .prompt-heading, .caption {
+  font-weight: 700;
+}
+
+.prompt-content, .heading, .divider, .button-tool, .select-tool, .pen-kind, .select-kind, .input {
+  border-radius: 10px;
+}
+
 .heading {
   padding: 30px;
-  border-radius: 10px;
   background-color: #d7efff;
 }
 
-.heading-title, .heading-caption, .prompt-heading, .prompt-caption {
+.heading-title, .prompt-heading, .prompt-caption, .caption {
   margin: 0;
 }
 
 .heading-title {
-  font-weight: 700;
   font-size: 48px;
   text-align: center;
 }
 
-.heading-caption {
-  font-size: 24px;
-  font-weight: 400;
-}
-
-.prompt-heading, .material-symbols-rounded {
+.prompt-heading {
   font-size: 36px;
-  font-weight: 700;
 }
 
 .prompt-caption {
@@ -37,27 +45,30 @@ body {
 .divider {
   height: 2px;
   background-color: black;
-  border-radius: 10px;
   padding: 0px 10px;
 }
 
 .caption {
   font-size: 18px;
-  font-weight: 700;
-  margin: 0px;
   opacity: 50%;
   margin: 10px 0px;
 }
 
-.grid, .row, .prompt-actions, .tools, .color-kind, .opacity-kind, .draw-kind, .grid-shape {
+.grid, .row, .prompt-actions, .tools, .select-kind, .grid-shape {
   display: flex;
 }
 
-.grid-shape {
-  flex-direction: column;
-  justify-content: center;
+.grid-shape, .tools {
   align-items: center;
-  font-family: "Press Start 2P", sans-serif;
+  justify-content: center;
+}
+
+.grid-shape, .grid {
+  flex-direction: column;
+}
+
+.done, .select-tool, .cancel {
+  flex: 1;
 }
 
 .grid-heading {
@@ -74,63 +85,51 @@ body {
   gap: 15px;
 }
 
-.color-kind, .opacity-kind, .draw-kind, .color-select {
+.select-kind, .color-select {
   gap: 10px;
   margin-bottom: 20px;
 }
 
 .grid {
-  flex-direction: column;
   margin-top: 15px;
   height: 480px;
   width: 480px;
 }
 
-.row {
+.row, .grid-box {
   flex: 1 0 auto;
 }
 
 .grid-box {
   border: 1px solid black;
-  flex: 1 0 auto;
   background-color: rgb(255, 255, 255);
 }
 
 .button-tool, .select-tool {
-  border-radius: 10px;
   border: none;
   background-color: #ffffffdd;
   transition: .2s;
   padding: 10px 25px;
-  font-family: "IBM Plex Sans", sans-serif;
   font-size: 24px;
 }
 
 .tools {
   margin-top: 10px;
-  align-items: center;
-  justify-content: center;
 }
 
-.pen-kind, .color-kind, .opacity-kind, .draw-kind {
-  border-radius: 10px;
-  background-color: #dedede;
+.pen-kind, .select-kind {
   padding: 5px;
 }
 
-.doneResize, .doneRename, .cancel, .doneColor {
+.done, .cancel {
   padding: 10px;
 }
 
-.doneResize, .doneRename, .doneColor, #solid, #rainbow, #full, #shading, #click-draw, #hover-draw, .cancel {
-  flex: 1;
-}
-
-.cancel {
+.cancel, .pen-kind, .select-kind {
   background-color: #dedede;
 }
 
-.tools-hover, .select, .doneResize, .doneRename, .doneColor {
+.tools-hover, .select, .done {
   background-color: #003cff;
   color: white;
 }
@@ -148,28 +147,13 @@ body {
   transform: scale(1.2);
 }
 
-.customize-prompt, .resize-prompt, .color-prompt, .clear-prompt {
+.prompt {
   position: fixed;
   left: 0;
   top: 0; /* place left and top 0 as resize prompt is initially on bottom of grid */
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.25);
-}
-
-.resize-prompt {
-  display: none;
-}
-
-.customize-prompt {
-  display: none;
-}
-
-.color-prompt {
-  display: none;
-}
-
-.clear-prompt {
   display: none;
 }
 
@@ -177,10 +161,9 @@ body {
   display: none;
 }
 
-.resize-content, .customize-content, .color-content, .clear-content {
+.prompt-content {
   width: 500px;
   background-color: white;
-  border-radius: 10px;
   padding: 40px;
   margin: 100px auto; /* center horizontally */
 }
@@ -192,15 +175,9 @@ body {
   width: 100px;
 }
 
-#size-input, #rename-input, #caption-input {
-  border-radius: 10px;
+.input {
   border: 2px solid black;
   font-size: 24px;
-  font-family: "IBM Plex Sans", sans-serif;
   margin-bottom: 20px;
   padding: 5px;
-}
-
-#customize-caption {
-  margin-bottom: 0px;
 }

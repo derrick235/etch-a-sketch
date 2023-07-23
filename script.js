@@ -1,38 +1,46 @@
-// get all HTML elements
-const grid = document.querySelector(".grid");
-const resizePrompt = document.querySelector(".resize-prompt");
-const resizeCaption = document.querySelector(".prompt-caption");
-const customizePrompt = document.querySelector(".customize-prompt");
-const colorToolsPrompt = document.querySelector(".color-prompt");
-const solid = document.querySelector("#solid");
-const rainbow = document.querySelector("#rainbow");
-const resize = document.querySelector("#resize");
-const colorTools = document.querySelector("#color-tools");
-const tools = document.querySelectorAll(".button-tool");
-const selectTools = document.querySelectorAll(".select-tool");
+// HTML ELEMENTS **********************************
 
+// grid elements
+const grid = document.querySelector(".grid");
 const doneButtons = document.querySelectorAll(".done");
+const headingTitle = document.querySelector(".heading-title");
+
+// tools
+const pen = document.querySelector("#pen");
 const eraser = document.querySelector("#eraser");
 const clear = document.querySelector("#clear");
-const rename = document.querySelector("#rename");
-const headingTitle = document.querySelector(".heading-title");
+const customize = document.querySelector("#customize");
+
+// resizing elements
+const resizePrompt = document.querySelector("#resize-prompt");
+const resizeCaption = document.querySelector(".prompt-caption");
+const resize = document.querySelector("#resize");
+
+// color tools elements
+const colorToolsPrompt = document.querySelector("#color-prompt");
+const colorTools = document.querySelector("#color-tools");
+const solid = document.querySelector("#solid");
+const rainbow = document.querySelector("#rainbow");
+const rainbowDisclaimer = document.querySelector("#rainbow-disclaimer");
 const colorSelect = document.querySelector(".color-select");
-const colorCaption = document.querySelector("#color-caption")
+const colorCaption = document.querySelector("#color-caption");
 const opacitySelect = document.querySelector(".opacity-kind");
 const opacityCaption = document.querySelector("#opacity-caption");
 const full = document.querySelector("#full");
-const shading = document.querySelector("#shading")
+const shading = document.querySelector("#shading");
 const hoverDraw = document.querySelector("#hover-draw");
 const clickDraw = document.querySelector("#click-draw");
-const pen = document.querySelector("#pen");
-const rainbowDisclaimer = document.querySelector("#rainbow-disclaimer");
-const deleteAll = document.querySelector("#delete-all");
-const clearCancel = document.querySelector("#clear-cancel");
-const clearPrompt = document.querySelector(".clear-prompt");
 
+// customization elements
 const customizeTitle = document.querySelector("#customize-title");
 const customizeCaption = document.querySelector("#customize-caption");
 const bitCaption = document.querySelector("#bit");
+const customizePrompt = document.querySelector("#customize-prompt");
+const tools = document.querySelectorAll(".button-tool");
+const selectTools = document.querySelectorAll(".select-tool");
+
+// clear all elements
+const clearPrompt = document.querySelector("#clear-prompt");
 
 // booleans
 let isRainbow = false;
@@ -44,7 +52,7 @@ let clickMethod = false;
 // initial values
 let penColor = "#000000";
 
-// add grid of 16x16 square divs
+// INITIAL GRID: add grid of 16x16 square divs ********************
 for (let i = 0; i < 16; i++) {
   let row = document.createElement("div");
   row.classList.add("row");
@@ -116,6 +124,83 @@ function changeBackgroundColor(e) {
   }
 }
 
+// add and remove select classes (blue highlight)
+function swapSelectClass(newSelect, oldSelect) {
+  newSelect.classList.add("select");
+  oldSelect.classList.remove("select");
+}
+
+// BUTTON FUNCTIONALITY METHODS ***********************************
+
+// open resize prompt
+function openResize() {
+  resizePrompt.style.display = "block";
+}
+
+// open rename prompt
+function openCustomize() {
+  customizePrompt.style.display = "block";
+}
+
+// open color tools prompt
+function openColorTools() {
+  colorToolsPrompt.style.display = "block";
+}
+
+// customization methods
+function customizeDone() {
+  headingTitle.textContent = document.getElementById("rename-input").value + ".etchasketch";
+  customizeTitle.textContent = document.getElementById("rename-input").value + ".etchasketch";
+  customizeCaption.textContent = document.getElementById("caption-input").value;
+
+  customizePrompt.style.display = "none";
+}
+
+// COLOR TOOLS METHODS *************************
+
+function changeColorTools() {
+  penColor = colorSelect.value;
+  colorToolsPrompt.style.display = "none";
+}
+
+// change color from rainbow to solid and vice versa
+function changeColorOptions() {
+  if (this.getAttribute("id") === "rainbow") {
+    isRainbow = true;
+  }
+  else {
+    isRainbow = false;
+  }
+  if (isRainbow) {
+    swapSelectClass(rainbow, solid);
+    colorSelect.style.display = "none";
+    colorCaption.style.display = "none";
+    opacitySelect.style.display = "none";
+    opacityCaption.style.display = "none";
+    rainbowDisclaimer.style.display = "block";
+  }
+  else {
+    swapSelectClass(solid, rainbow);
+    colorSelect.style.display = "block";
+    colorCaption.style.display = "block";
+    opacitySelect.style.display = "flex";
+    opacityCaption.style.display = "block";
+    rainbowDisclaimer.style.display = "none";
+  }
+}
+
+// change opacity
+function turnOnOpacity() {
+  shadingOn = true;
+  swapSelectClass(shading, full);
+}
+
+function turnOffOpacity() {
+  shadingOn = false;
+  swapSelectClass(full, shading);
+}
+
+// (COLOR TOOLS CONT.) CLICK AND DRAG METHODS ******************************
 function startChangeColorClick(e) {
   let allGrids = document.querySelectorAll(".grid-box");
   document.addEventListener("mouseup", endChangeColorClick); // if mouse is released anywhere, stop coloring
@@ -136,81 +221,47 @@ function endChangeColorClick(e) {
   })
 }
 
-// BUTTON FUNCTIONALITY METHODS ***********************************
+function changeClick() {
+  swapSelectClass(clickDraw, hoverDraw);
+  clickMethod = true;
 
-// open resize prompt
-function openResize() {
-  resizePrompt.style.display = "block";
+  let allGrids = document.querySelectorAll(".grid-box");
+  allGrids.forEach((singleGrid) => {
+    singleGrid.removeEventListener("mouseover", changeBackgroundColor);
+    singleGrid.addEventListener("mousedown", startChangeColorClick);
+  })
+  mouseDownDraw = true;
 }
 
-// open rename prompt
-function openRename() {
-  customizePrompt.style.display = "block";
+function changeHover() {
+  swapSelectClass(hoverDraw, clickDraw);
+  clickMethod = false;
+
+  let allGrids = document.querySelectorAll(".grid-box");
+  allGrids.forEach((singleGrid) => {
+    singleGrid.removeEventListener("mousedown", startChangeColorClick);
+    singleGrid.addEventListener("mouseover", changeBackgroundColor);
+  })
+  mouseDownDraw = false;
 }
 
-// open color tools prompt
-function openColorTools() {
-  colorToolsPrompt.style.display = "block";
-}
-
-// change color from rainbow to solid and vice versa
-function changeColorOptions() {
-  if (this.getAttribute("id") === "rainbow") {
-    isRainbow = true;
-  }
-  else {
-    isRainbow = false;
-  }
-  if (isRainbow) {
-    rainbow.classList.add("select");
-    solid.classList.remove("select");
-    colorSelect.style.display = "none";
-    colorCaption.style.display = "none";
-    opacitySelect.style.display = "none";
-    opacityCaption.style.display = "none";
-    rainbowDisclaimer.style.display = "block";
-  }
-  else {
-    rainbow.classList.remove("select");
-    solid.classList.add("select");
-    colorSelect.style.display = "block";
-    colorCaption.style.display = "block";
-    opacitySelect.style.display = "flex";
-    opacityCaption.style.display = "block";
-    rainbowDisclaimer.style.display = "none";
-  }
-}
-
-// change opacity
-function turnOnOpacity() {
-  shadingOn = true;
-  full.classList.remove("select");
-  shading.classList.add("select");
-}
-
-function turnOffOpacity() {
-  shadingOn = false;
-  full.classList.add("select");
-  shading.classList.remove("select");
-}
-
-// switch to eraser or turn off
+// PEN / ERASER METHOD ********************************
 function erase() {
   isEraser = !(isEraser);
 
   // add/remove select class from button
   if (isEraser) {
-    eraser.classList.add("select");
-    pen.classList.remove("select");  
+    swapSelectClass(eraser, pen);
   }
   else {
-    eraser.classList.remove("select");
-    pen.classList.add("select");
+    swapSelectClass(pen, eraser);
   }
 }
 
+// CLEAR ALL METHODS *******************************
+
 // clear entire grid with white background
-function clearAllSure() {
+function clearAllSure() { // popup
   clearPrompt.style.display = "block";
 }
 
@@ -226,7 +277,7 @@ function clearAll() {
   clearPrompt.style.display = "none";
 }
 
-// change grid size once OK is selected
+// CHANGE GRID SIZE METHOD *******************************
 function changeSizeOK(e) {
   let newSize = document.getElementById("size-input").value;
 
@@ -265,49 +316,11 @@ function changeSizeOK(e) {
 
   // reset caption color if it turned red before
   resizeCaption.style.color = "black";
-  resizePrompt.style.display = "none";
-  
+  resizePrompt.style.display = "none"; 
 }
 
-function changeClick() {
-  clickDraw.classList.add("select");
-  hoverDraw.classList.remove("select");
-  clickMethod = true;
-
-  let allGrids = document.querySelectorAll(".grid-box");
-  allGrids.forEach((singleGrid) => {
-    singleGrid.removeEventListener("mouseover", changeBackgroundColor);
-    singleGrid.addEventListener("mousedown", startChangeColorClick);
-  })
-  mouseDownDraw = true;
-}
-
-function changeHover() {
-  clickDraw.classList.remove("select");
-  hoverDraw.classList.add("select");
-  clickMethod = false;
-
-  let allGrids = document.querySelectorAll(".grid-box");
-  allGrids.forEach((singleGrid) => {
-    singleGrid.removeEventListener("mousedown", startChangeColorClick);
-    singleGrid.addEventListener("mouseover", changeBackgroundColor);
-  })
-  mouseDownDraw = false;
-}
-
-function customizeDone() {
-  headingTitle.textContent = document.getElementById("rename-input").value + ".etchasketch";
-  customizeTitle.textContent = document.getElementById("rename-input").value + ".etchasketch";
-  customizeCaption.textContent = document.getElementById("caption-input").value;
-
-  customizePrompt.style.display = "none";
-}
-
-function changeColorTools() {
-  penColor = colorSelect.value;
-  colorToolsPrompt.style.display = "none";
-}
-
+// ANIMATION FUNCTIONS *************************************
+ 
 function addButtonAnimationTools() {
   this.classList.add("tools-hover");
 }
@@ -343,24 +356,46 @@ function cancelPrompt() {
   else if (typePrompt === 'colorTools') {
     colorToolsPrompt.style.display = "none";
   }
+  else {
+    clearPrompt.style.display = "none";
+  }
 }
 
-let resizeOkButton = document.querySelector(".doneResize");
+// OPEN TOOLS EVENTS
+customize.addEventListener("click", openCustomize);
+colorTools.addEventListener("click", openColorTools);
 resize.addEventListener("click", openResize);
 
-rename.addEventListener("click", openRename);
+// OK AND CANCEL BUTTONS
+const resizeOkButton = document.querySelector("#done-resize");
+resizeOkButton.addEventListener("click", changeSizeOK);
+
+const customizeOkButton = document.querySelector("#done-customize");
+customizeOkButton.addEventListener("click", customizeDone);
+
+const colorOkButton = document.querySelector("#done-color");
+colorOkButton.addEventListener("click", changeColorTools);
+
+const cancelButtons = document.querySelectorAll(".cancel");
+cancelButtons.forEach((cancel) => {
+  cancel.addEventListener("click", cancelPrompt);
+});
+
+const deleteAll = document.querySelector("#delete-all");
+deleteAll.addEventListener("click", clearAll);
+
+// SELECT OPTIONS BUTTON EVENTS
 rainbow.addEventListener("click", changeColorOptions);
 solid.addEventListener("click", changeColorOptions);
 eraser.addEventListener("click", erase);
 pen.addEventListener("click", erase);
 clear.addEventListener("click", clearAllSure);
-colorTools.addEventListener("click", openColorTools);
 full.addEventListener("click", turnOffOpacity);
 shading.addEventListener("click", turnOnOpacity);
-
 clickDraw.addEventListener("click", changeClick);
 hoverDraw.addEventListener("click", changeHover);
 
+// BUTTON ANIMATIONS
 tools.forEach((tool) => {
   tool.addEventListener("mouseover", addButtonAnimationTools);
   tool.addEventListener("mouseout", removeButtonAnimationTools);
@@ -371,21 +406,5 @@ selectTools.forEach((tool) => {
   tool.addEventListener("mouseout", removeButtonAnimation);
 })
 
-resizeOkButton.addEventListener("click", changeSizeOK);
-
-let renameOkButton = document.querySelector(".doneRename");
-renameOkButton.addEventListener("click", customizeDone);
-
-let colorOkButton = document.querySelector(".doneColor");
-colorOkButton.addEventListener("click", changeColorTools);
-
-let cancelButtons = document.querySelectorAll(".cancel");
-
-cancelButtons.forEach((cancel) => {
-  cancel.addEventListener("click", cancelPrompt);
-});
-
 deleteAll.addEventListener("mouseover", addDeleteAnimation);
 deleteAll.addEventListener("mouseout", removeDeleteAnimation);
-deleteAll.addEventListener("click", clearAll);
-clearCancel.addEventListener("click", clearAllCancel);
