@@ -155,6 +155,7 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.25);
   display: none;
+  overflow-y: auto;
 }
 
 #rainbow-disclaimer {
@@ -165,7 +166,7 @@ body {
   width: 500px;
   background-color: white;
   padding: 40px;
-  margin: 100px auto; /* center horizontally */
+  margin: 50px auto; /* center horizontally */
 }
 
 .color-select {
